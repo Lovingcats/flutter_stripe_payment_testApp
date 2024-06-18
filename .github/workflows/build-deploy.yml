@@ -1,44 +1,27 @@
-name: Flutter Web CI/CD
+name: Deploy Flutter Web App to GitHub Pages
 
 on:
   push:
     branches:
-      - main
-  pull_request:
-    branches:
-      - main
+      - main  # 또는 Flutter 앱의 소스 코드가 있는 브랜치 이름
 
 jobs:
-  build:
-
+  build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v4.1.1
 
-    - name: Set up Flutter
-      uses: subosito/flutter-action@v2
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2.12.0
       with:
-        flutter-version: '3.10.6'  # 최신 안정 버전 설정 (확인한 버전)
-        channel: 'stable'          
+        flutter-version: '3.10.6' # 사용하는 Flutter 버전으로 변경
 
-    - name: Install dependencies
-      run: flutter pub get
-
-    - name: Build web
+    - name: Build Web
       run: flutter build web --release
 
     - name: Deploy to GitHub Pages
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: |
-        git config --global user.name 'github-actions[bot]'
-        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        cd build/web
-        git init
-        git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-        git checkout -b gh-pages
-        touch .nojekyll
-        git add .
-        git commit -m 'Deploy to GitHub Pages'
-        git push --force origin gh-pages
+      uses: peaceiris/actions-gh-pages@v3.9.3
+      with:
+        github_token: ${{ secrets.MY_SECRET_KEY_NAME }} # repository에서 사용할 시크릿 키 이름
+        publish_dir: ./build/web
