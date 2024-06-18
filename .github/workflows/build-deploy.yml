@@ -24,9 +24,12 @@ jobs:
     - name: Build Web
       run: flutter build web --release
 
+    - name: Add .nojekyll
+      run: echo > build/web/.nojekyll
+
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.MY_SECRET_KEY_NAME }} # repository에서 사용할 시크릿 키 이름
-        publish_dir: ./build/web
-
+        publish_dir: build/web
+        publish_branch: gh-pages  # 배포 브랜치 설정
