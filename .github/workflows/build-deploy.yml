@@ -20,7 +20,7 @@ jobs:
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '2.2.3'
+        flutter-version: 'latest'  # Flutter SDK를 최신 버전으로 설정
 
     - name: Install dependencies
       run: flutter pub get
