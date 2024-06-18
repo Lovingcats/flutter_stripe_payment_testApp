@@ -20,7 +20,8 @@ jobs:
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: 'latest'  # Flutter SDK를 최신 버전으로 설정
+        flutter-version: '3.10.6'  # 최신 안정 버전 설정 (확인한 버전)
+        channel: 'stable'          # 안정적인 채널 설정
 
     - name: Install dependencies
       run: flutter pub get
