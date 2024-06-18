@@ -23,5 +23,5 @@ jobs:
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3.9.3
       with:
-        github_token: ${{ secrets.MY_SECRET_KEY_NAME }} # repository에서 사용할 시크릿 키 이름
+        github_token: ${{ secrets.web}} # repository에서 사용할 시크릿 키 이름
         publish_dir: ./build/web
